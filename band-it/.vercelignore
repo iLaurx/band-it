@@ -1,0 +1,12 @@
+node_modules/
+.npm-cache/
+dist/
+.git/
+.vercel/
+.env*
+docs/
+tests/
+tools/
+AGENTS.md
+README.md
+*.log
