@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { armPose } from './motion.js';
+import { armPose, torsoTilt } from './motion.js';
 
 // Dimensiones ilustrativas en unidades de escena. No es un modelo biomecánico.
 export function createViewer(container, options) {
@@ -54,13 +54,18 @@ export function createViewer(container, options) {
     mesh.scale.set(mesh.userData.radius, direction.length(), mesh.userData.radius);
     mesh.quaternion.setFromUnitVectors(axis, direction.normalize());
   }
-  ellipsoid([0, 1.58, 0], [0.27, 0.38, 0.15]);
+  const torso = new THREE.Group();
+  torso.position.y = 1.15;
+  scene.add(torso);
+  const torsoParts = [];
+  torsoParts.push(ellipsoid([0, 1.58, 0], [0.27, 0.38, 0.15]));
   ellipsoid([0, 1.16, 0], [0.23, 0.18, 0.15], dark);
-  ellipsoid([0, 2.11, 0], [0.15, 0.19, 0.15], joints);
+  torsoParts.push(ellipsoid([0, 2.11, 0], [0.15, 0.19, 0.15], joints));
   // Nariz y marca frontal para reconocer la orientación desde cualquier cámara.
-  ellipsoid([0, 2.1, 0.15], [0.035, 0.04, 0.045], joints);
-  ellipsoid([0, 1.68, 0.145], [0.045, 0.08, 0.015], dark);
-  ellipsoid([0, 1.9, 0], [0.075, 0.1, 0.075]);
+  torsoParts.push(ellipsoid([0, 2.1, 0.15], [0.035, 0.04, 0.045], joints));
+  torsoParts.push(ellipsoid([0, 1.68, 0.145], [0.045, 0.08, 0.015], dark));
+  torsoParts.push(ellipsoid([0, 1.9, 0], [0.075, 0.1, 0.075]));
+  torsoParts.forEach(mesh => { mesh.position.y -= 1.15; torso.add(mesh); });
   for (const sign of [-1, 1]) {
     const hip = new THREE.Vector3(sign * 0.14, 1.15, 0);
     const knee = new THREE.Vector3(sign * 0.2, 0.63, 0.025);
@@ -81,7 +86,10 @@ export function createViewer(container, options) {
     thumb: ellipsoid([0, 0, 0], [0.025, 0.045, 0.025], joints),
   }));
   // La banda continua pasa bajo ambos pies; cada tramo termina en una agarradera.
-  connect(segment(0.009, rubber), new THREE.Vector3(-0.35, 0.012, 0.04), new THREE.Vector3(0.35, 0.012, 0.04));
+  const footBand = segment(0.009, rubber);
+  connect(footBand, new THREE.Vector3(-0.35, 0.012, 0.04), new THREE.Vector3(0.35, 0.012, 0.04));
+  const handBand = segment(0.009, rubber);
+  const attachments = [new THREE.Vector3(), new THREE.Vector3()];
   const platform = new THREE.Mesh(new THREE.CylinderGeometry(1.28, 1.28, 0.04, 64), dark);
   platform.position.y = -0.035;
   scene.add(platform);
@@ -106,11 +114,15 @@ export function createViewer(container, options) {
   const forearm = new THREE.Vector3();
   function pose() {
     const lift = (1 - Math.cos(elapsed * Math.PI / 2)) / 2;
-    arms.forEach(arm => {
+    torso.rotation.x = torsoTilt(motion);
+    footBand.visible = motion !== 'pullapart';
+    handBand.visible = motion === 'pullapart';
+    arms.forEach((arm, index) => {
       const p = armPose(motion, arm.sign, lift);
       start.fromArray(p.shoulder); elbow.fromArray(p.elbow); hand.fromArray(p.hand);
       connect(arm.upper, start, elbow);
       connect(arm.lower, elbow, hand);
+      arm.shoulder.position.copy(start);
       arm.elbow.position.copy(elbow);
       arm.hand.position.copy(hand);
       forearm.subVectors(hand, elbow).normalize();
@@ -123,11 +135,17 @@ export function createViewer(container, options) {
       arm.thumb.position.copy(hand).addScaledVector(grip, 0.075 * thumbSign).addScaledVector(forearm, 0.015);
       direction.copy(grip).multiplyScalar(thumbSign);
       arm.thumb.quaternion.setFromUnitVectors(axis, direction);
-      anchor.fromArray(p.anchor);
+      if (motion === 'pullapart') {
+        const other = armPose(motion, -arm.sign, lift);
+        anchor.fromArray(other.hand);
+      } else anchor.fromArray(p.anchor);
       attachment.subVectors(anchor, hand).normalize().multiplyScalar(0.14).add(hand);
       connect(arm.straps[0], a, attachment); connect(arm.straps[1], b, attachment);
       connect(arm.band, anchor, attachment);
+      arm.band.visible = motion !== 'pullapart';
+      attachments[index].copy(attachment);
     });
+    if (motion === 'pullapart') connect(handBand, attachments[0], attachments[1]);
   }
   function render() { if (!disposed && !contextLost && !document.hidden) { pose(); renderer.render(scene, camera); } }
   const observer = new ResizeObserver(() => {

@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { armPose, UPPER_ARM, FOREARM } from '../src/motion.js';
+import { armPose, UPPER_ARM, FOREARM, motions, torsoPoint } from '../src/motion.js';
 
 const distance = (a, b) => Math.hypot(...a.map((v, i) => v - b[i]));
 test('los segmentos y agarres mantienen su longitud durante todo el recorrido', () => {
-  for (const motion of ['curl', 'lateral', 'front']) for (const sign of [-1, 1]) {
+  for (const motion of motions) for (const sign of [-1, 1]) {
     for (let i = 0; i <= 200; i++) {
       const pose = armPose(motion, sign, i / 200);
       assert.ok(Math.abs(distance(pose.shoulder, pose.elbow) - UPPER_ARM) < 1e-12);
@@ -28,7 +28,7 @@ test('curl conserva el codo; lateral abre los brazos; frontal avanza sin abrirlo
   assert.ok(front.hand[2] > 0.7);
 });
 test('trayectorias continuas y simétricas sin saltos entre muestras', () => {
-  for (const motion of ['curl', 'lateral', 'front']) {
+  for (const motion of motions) {
     let previous = armPose(motion, 1, 0);
     for (let i = 1; i <= 1000; i++) {
       const right = armPose(motion, 1, i / 1000), left = armPose(motion, -1, i / 1000);
@@ -37,5 +37,23 @@ test('trayectorias continuas y simétricas sin saltos entre muestras', () => {
       assert.equal(right.hand[1], left.hand[1]); assert.equal(right.hand[2], left.hand[2]);
       previous = right;
     }
+  }
+});
+
+test('los nuevos movimientos conservan su apoyo, orientación y recorrido específico', () => {
+  const startRow = armPose('row', 1, 0), endRow = armPose('row', 1, 1);
+  assert.deepEqual(startRow.shoulder, torsoPoint([0.29, 1.8, 0.03], 'row'));
+  assert.ok(endRow.elbow[2] < startRow.elbow[2] - 0.25);
+  assert.ok(endRow.hand[1] > startRow.hand[1] + 0.5);
+  const startOpen = armPose('pullapart', 1, 0), endOpen = armPose('pullapart', 1, 1);
+  assert.ok(endOpen.hand[0] > startOpen.hand[0] + 0.6);
+  assert.equal(startOpen.hand[1], endOpen.hand[1]);
+  const upright = armPose('upright', 1, 1);
+  assert.ok(upright.elbow[0] > upright.hand[0]);
+  assert.ok(upright.elbow[1] > upright.hand[1]);
+  for (const t of [0, 0.5, 1]) {
+    const hammer = armPose('hammer', 1, t), curl = armPose('curl', 1, t);
+    assert.deepEqual(hammer.hand, curl.hand); // Variante justificada: cambia el agarre.
+    assert.notDeepEqual(hammer.grip, curl.grip);
   }
 });

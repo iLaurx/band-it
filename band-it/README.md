@@ -33,14 +33,14 @@ npm run preview
 
 ## Incluido en el MVP
 
-- Catálogo inicial: curl de bíceps, elevación lateral y elevación frontal.
+- Siete ejercicios: curl de bíceps, curl martillo, remo inclinado, apertura de banda, remo vertical, elevación lateral y elevación frontal.
 - Buscador, filtros por grupo y selector de las cinco bandas.
 - Figura articulada con movimientos diferenciados, banda y agarraderas visibles.
 - Cámara orbital, vistas de frente/perfil/tres cuartos, zoom, pausa, velocidad y recorrido manual del ciclo.
 - Instrucciones textuales, alternativa sin WebGL y reducción de movimiento.
 - Diseño adaptable y configuración estática de Vercel.
 
-Etapa 3 de 3 completada: MVP local revisado y preparado para publicar. Se conservan tres ejercicios; la figura es esquemática y no valida la técnica de una persona. La página aún no está publicada: falta autorización y acceso al proyecto correcto de Vercel. Ver pruebas y límites en [docs/ESTADO.md](docs/ESTADO.md).
+Etapa 3 de 3 completada: MVP local revisado y preparado para publicar. Catálogo ampliado después a petición del usuario, conservando las mismas cinco bandas y agarraderas. La figura es esquemática y no valida la técnica de una persona. La página aún no está publicada: falta autorización y acceso al proyecto correcto de Vercel. Ver pruebas y límites en [docs/ESTADO.md](docs/ESTADO.md).
 
 ## Terminar en un máximo de tres etapas
 

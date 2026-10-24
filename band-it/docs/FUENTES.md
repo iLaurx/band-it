@@ -1,5 +1,26 @@
 # Fuentes y límites
 
+## Ampliación solicitada por el usuario · 23 de octubre de 2026
+
+Se añaden cuatro ejercicios, con las cinco bandas y las agarraderas existentes. Las fuentes documentan movimientos, no la compatibilidad del producto desconocido del usuario. No se trasladan resistencias, repeticiones, programas terapéuticos ni límites de elongación de otras marcas.
+
+| Ejercicio | Fuente primaria consultada y adaptación |
+| --- | --- |
+| Remo inclinado | [Meglio, guía del fabricante, n.º 23](https://mymeglio.com/pages/resistance-tube-exercise-guide). Variante bilateral con apoyo bajo ambos pies. |
+| Apertura de banda / pull apart | [Meglio, n.º 21](https://mymeglio.com/pages/resistance-tube-exercise-guide). Mismas agarraderas, banda entre manos; sin pisarla. También contrastado con [BHF, n.º 1](https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands). |
+| Remo vertical | [Fitbod, demostración propia revisada por Jim Parker, CPT](https://fitbod.me/exercises/handle-band-upright-row). Misma banda y agarraderas, sin cruzarla. Se limita la ilustración al pecho bajo, por debajo de hombros, apoyándose en el recorrido del [manual Bodylastics, página 55 del PDF](https://storage.googleapis.com/msgsndr/XvPdGEgSd8SLZjFiaiaQ/media/678d836801b601124c15cda0.pdf#page=55), que utiliza barra: solo se toma el límite del recorrido, no ese accesorio. No se adopta la elevación sobre hombros ni las afirmaciones clínicas de Fitbod. |
+| Curl martillo | [Manual Bodylastics, páginas 82–83 del PDF](https://storage.googleapis.com/msgsndr/XvPdGEgSd8SLZjFiaiaQ/media/678d836801b601124c15cda0.pdf#page=82). El texto admite agarraderas en el movimiento aunque el montaje describe lazos de tobilleras. Aquí se conservan exclusivamente las agarraderas actuales. [ASFA, explicación propia del hammer curl](https://www.americansportandfitness.com/blogs/fitness-blog/how-to-do-a-hammer-curl) respalda la participación del braquiorradial; no se describe como aislamiento de muñeca. |
+
+### Imágenes aportadas y decisiones
+
+- Imagen 1: parece un remo vertical con tramos cruzados. Se integra el patrón documentado sin cruzarlos y con menor altura; no se reproduce literalmente la pose comercial.
+- Imagen 2: banda cerrada y tirón cruzado con una mano. Sin secuencia no se distingue con certeza curl cruzado, elevación diagonal u otro movimiento. No se añade esa variante de banda ni se supone otro accesorio. Se incluye el martillo bilateral documentado, sin afirmar que sea el ejercicio de la foto.
+- Imagen 3: compatible visualmente con el extremo de una apertura de banda; se integra con las mismas agarraderas y una ligera flexión constante de codos.
+
+Cada patrón nuevo tiene trayectoria propia. El martillo comparte la flexión de codo del curl, con agarre neutro específico y pulgar orientado de manera distinta: es una variante justificada, no otro movimiento etiquetado sobre la misma pose completa. El remo también inclina torso, cabeza y hombros desde las caderas. La apertura conecta las dos agarraderas y oculta todos los tramos de banda del suelo. No se asumen longitud ni tensión suficiente para un recorrido determinado.
+
+Lo siguiente conserva el registro histórico de las etapas iniciales, cuando había tres ejercicios.
+
 Revisión de etapa 2: 23 de octubre de 2026.
 
 Revisión final de etapa 3, misma fecha: catálogo, pasos y equipo conservados sin ampliación. Se verificó que los tres ejercicios usan solo banda y agarraderas, con apoyo bajo pies condicionado al fabricante. Las comprobaciones visuales y geométricas no son validación biomecánica. Referencias técnicas de despliegue verificadas en las páginas oficiales de [Vite en Vercel](https://vercel.com/docs/frameworks/frontend/vite), [CLI deploy](https://vercel.com/docs/cli/deploy) y [.vercelignore](https://vercel.com/docs/deployments/vercel-ignore); pasos en [DESPLIEGUE.md](DESPLIEGUE.md).

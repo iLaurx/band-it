@@ -35,3 +35,5 @@ button,input,select{min-height:44px}
 }
 
 .unavailable #viewport{height:150px}.unavailable canvas{visibility:hidden}.unavailable .camera-views,.unavailable .timeline,.unavailable .playback,.unavailable #viewer-status + .viewer-caption{display:none}.unavailable .viewer-message{top:15%;line-height:1.7}.unavailable #viewport:has(canvas)::after{content:'Vista 3D interrumpida. Consulta los pasos.';position:absolute;inset:40px 15px;text-align:center;color:var(--muted);font-size:13px}.timeline{margin:0 auto}.playback{margin-top:0}
+
+.filters{flex-wrap:wrap}@media(min-width:701px){#exercise-list{max-height:660px;overflow-y:auto}.exercise{min-width:0}}

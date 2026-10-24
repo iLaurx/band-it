@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { bands, exercises } from '../src/data.js';
+import { motions } from '../src/motion.js';
 
 test('conserva las cinco resistencias aportadas por el usuario', () => {
   assert.deepEqual(Object.fromEntries(bands.map(b => [b.name, b.lbs])), {
@@ -10,7 +11,7 @@ test('conserva las cinco resistencias aportadas por el usuario', () => {
 
 test('el catálogo tiene identificadores únicos y un movimiento disponible por ejercicio', () => {
   assert.equal(new Set(exercises.map(e => e.id)).size, exercises.length);
-  const supported = new Set(['curl', 'lateral', 'front']);
+  const supported = new Set(motions);
   for (const exercise of exercises) {
     assert.ok(supported.has(exercise.motion), `Falta movimiento: ${exercise.id}`);
     assert.ok(exercise.steps.length >= 3);
